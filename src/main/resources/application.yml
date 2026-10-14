@@ -1,8 +1,9 @@
 spring:
   application.name: mongock-demo2
+  config.import: optional:file:.env[.properties]
   data:
     mongodb:
-      uri: mongodb://yu71:53cret@localhost:27017/client
+      uri: mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@localhost:27017/client
 mongock:
   migration-scan-package:
     - id.my.hendisantika.mongockdemo2.migration
