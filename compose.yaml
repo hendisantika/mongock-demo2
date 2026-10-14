@@ -1,0 +1,15 @@
+services:
+  mongodb:
+    image: mongo:8.0.4
+    container_name: mongock-demo2
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: yu71
+      MONGO_INITDB_ROOT_PASSWORD: 53cret
+    volumes:
+      - mongo-data:/data/db
+
+volumes:
+  mongo-data:
+    driver: local
