@@ -21,7 +21,7 @@ class MongockDemo2ApplicationTests {
 
     @Container
     @ServiceConnection
-    static MongoDBContainer mongo = new MongoDBContainer("mongo:8.0.4").withReplicaSet();
+    static MongoDBContainer mongo = new MongoDBContainer("mongo:8.3.11").withReplicaSet();
 
     @Autowired
     private ClientRepository clientRepository;
