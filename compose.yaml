@@ -7,6 +7,24 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${MONGO_USERNAME:?set MONGO_USERNAME in .env}
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD:?set MONGO_PASSWORD in .env}
+    # A replica set with auth needs a keyfile; generate one, then start mongod as single-node replica set rs0
+    entrypoint:
+      - bash
+      - -c
+      - |
+        head -c 756 /dev/urandom | base64 > /data/configdb/keyfile
+        chown mongodb:mongodb /data/configdb/keyfile
+        chmod 400 /data/configdb/keyfile
+        exec docker-entrypoint.sh mongod --replSet rs0 --keyFile /data/configdb/keyfile --bind_ip_all
+    # Initiate the replica set on first start; afterwards just report its status
+    healthcheck:
+      test: >
+        mongosh --quiet -u "$$MONGO_INITDB_ROOT_USERNAME" -p "$$MONGO_INITDB_ROOT_PASSWORD"
+        --eval "try { rs.status().ok } catch (e) { rs.initiate({ _id: 'rs0', members: [{ _id: 0, host: 'localhost:27017' }] }).ok }"
+      interval: 5s
+      timeout: 10s
+      start_period: 30s
+      retries: 10
     volumes:
       - mongo-data:/data/db
 
