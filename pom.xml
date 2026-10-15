@@ -14,7 +14,7 @@
     <name>mongock-demo2</name>
     <description>mongock-demo2</description>
     <properties>
-        <java.version>23</java.version>
+        <java.version>25</java.version>
         <mongock.version>5.5.1</mongock.version>
     </properties>
     <dependencies>
