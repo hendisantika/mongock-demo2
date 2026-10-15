@@ -73,6 +73,7 @@ To run MongoDB on its own, use `docker compose up -d`.
 ```
 
 `MongockDemo2ApplicationTests` starts MongoDB in a Testcontainers replica set and checks that both migrations ran.
+It uses the same `mongo` image as `compose.yaml`, so Dependabot's image updates apply to the test too.
 Docker must be running.
 
 ## CI and dependency updates
