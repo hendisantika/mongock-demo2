@@ -7,6 +7,8 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${MONGO_USERNAME:?set MONGO_USERNAME in .env}
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD:?set MONGO_PASSWORD in .env}
+      # Also read by Spring Boot's Docker Compose support as the database to connect to
+      MONGO_INITDB_DATABASE: client
     # A replica set with auth needs a keyfile; generate one, then start mongod as single-node replica set rs0
     entrypoint:
       - bash
